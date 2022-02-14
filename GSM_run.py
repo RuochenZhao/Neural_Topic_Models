@@ -24,7 +24,7 @@ from multiprocessing import cpu_count
 #from torch.utils.data import Dataset,DataLoader
 
 parser = argparse.ArgumentParser('GSM topic model')
-parser.add_argument('--taskname',type=str,default='cnews10k',help='Taskname e.g cnews10k')
+parser.add_argument('--taskname',type=str,default='who',help='Taskname e.g cnews10k')
 parser.add_argument('--no_below',type=int,default=5,help='The lower bound of count for words to keep, e.g 10')
 parser.add_argument('--no_above',type=float,default=0.005,help='The ratio of upper bound of count for words to keep, e.g 0.3')
 parser.add_argument('--num_epochs',type=int,default=100,help='Number of iterations (set to 100 as default, but 1000+ is recommended.)')
@@ -36,7 +36,7 @@ parser.add_argument('--batch_size',type=int,default=512,help='Batch size (defaul
 parser.add_argument('--criterion',type=str,default='cross_entropy',help='The criterion to calculate the loss, e.g cross_entropy, bce_softmax, bce_sigmoid')
 parser.add_argument('--auto_adj',action='store_true',help='To adjust the no_above ratio automatically (default:rm top 20)')
 parser.add_argument('--ckpt',type=str,default=None,help='Checkpoint path')
-parser.add_argument('--lang',type=str,default="zh",help='Language of the dataset')
+parser.add_argument('--lang',type=str,default="en",help='Language of the dataset')
 
 args = parser.parse_args()
 

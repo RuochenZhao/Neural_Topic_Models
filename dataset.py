@@ -22,9 +22,25 @@ sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 class DocDataset(Dataset):
     def __init__(self,taskname,txtPath=None,lang="zh",tokenizer=None,stopwords=None,no_below=5,no_above=0.1,hasLable=False,rebuild=False,use_tfidf=False):
         cwd = os.getcwd()
-        txtPath = os.path.join(cwd,'data',f'{taskname}_lines.txt') if txtPath==None else txtPath
+        if taskname == 'who':
+            txtPath = '../DATASETS/WHO_EIOS/33k.txt'
+            with open(txtPath) as f:
+                lines = f.readlines()
+            X = []
+            titles = []
+            # print(lines[:10])
+            # raise Exception('end')
+            for i in range(len(lines)):
+                if lines[i]=='Text:\n':
+                    X.append(lines[i+1])
+                elif lines[i]=='Title:\n':
+                    titles.append(lines[i+1])
+            print('Number of texts: {}; titles: {}'.format(len(X), len(titles)))
+            self.txtLines = [line.strip('\n') for line in X]
+        else:
+            txtPath = os.path.join(cwd,'data',f'{taskname}_lines.txt') if txtPath==None else txtPath
+            self.txtLines = [line.strip('\n') for line in open(txtPath,'r',encoding='utf-8')]
         tmpDir = os.path.join(cwd,'data',taskname)
-        self.txtLines = [line.strip('\n') for line in open(txtPath,'r',encoding='utf-8')]
         self.dictionary = None
         self.bows,self.docs = None,None
         self.use_tfidf = use_tfidf
